@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.compomics.respinonline.springmvc.model.Identification;
 import com.compomics.respinonline.springmvc.model.Spectrum;
+import java.util.ArrayList;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/")
@@ -28,17 +30,31 @@ public class AppController {
     @Autowired
     MessageSource messageSource;
 
+    /*
+     * This method will forward to the home page
+     */
+    @RequestMapping(value = {"/",}, method = RequestMethod.GET)
+    public String listIdentifications(ModelMap model) {
+        return "identifications";
+    }
 
     /*
-     * This method will list all existing employees.
+     * This method will list all identifications
      */
-    @RequestMapping(value = {"/", "/respin"}, method = RequestMethod.GET)
-    public String listIdentifications(ModelMap model) {
-        List<Identification> identifications = idService.findAllIdentifications();
+    @RequestMapping(value = {"/query",}, method = RequestMethod.GET)
+    public String filterIdentifications(ModelMap model, 
+            @RequestParam(value = "query_value", required = false) String queryValue, 
+            @RequestParam(value = "query_type", required = false) String queryType) {
+        List<Identification> identifications = new ArrayList<>();
+        if (queryType.equalsIgnoreCase("sequence")) {
+            identifications = idService.findAllIdentificationsByPeptide(queryValue);
+        } else if (queryType.equalsIgnoreCase("experiment")) {
+            identifications = idService.findAllIdentificationsByExperiment(queryValue);
+        }
+        model.addAttribute("query_value", queryValue);
+        model.addAttribute("query_type", queryType);
         model.addAttribute("identifications", identifications);
-        List<Identification> identificationsfilteredPepAndAssay = idService.findAllIdentificationsByExperimentAndPeptide("1", "KENNETH");
-        model.addAttribute("identificationsfilteredpep", identificationsfilteredPepAndAssay);
-        return "allidents";
+        return "identifications";
     }
 
 
@@ -47,7 +63,9 @@ public class AppController {
      * updating employee in database. It also validates the user input
      */
     @RequestMapping(value = {"respin/view/{id}"}, method = RequestMethod.GET)
-    public String viewIdentification(ModelMap model, @PathVariable int id) {
+    public String viewIdentification(ModelMap model,
+            @PathVariable int id
+    ) {
         Identification selectedIdentification = idService.findById(id);
         Spectrum selectedSpectrum = spService.findBySpectrumIdAndExperiment(selectedIdentification.getSpectrumID(), selectedIdentification.getAssay());
         model.addAttribute("identification", selectedIdentification);

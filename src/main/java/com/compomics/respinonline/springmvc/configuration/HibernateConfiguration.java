@@ -50,7 +50,7 @@ public class HibernateConfiguration {
         properties.put("hibernate.show_sql", environment.getRequiredProperty("hibernate.show_sql"));
         properties.put("hibernate.format_sql", environment.getRequiredProperty("hibernate.format_sql"));
         //this will create a new db every single time
-        // properties.put("hibernate.hbm2ddl.auto", "create");
+        //properties.put("hibernate.hbm2ddl.auto", "create");
         //this will only create a new db if it did not exist yet (PRODUCTION)
         properties.put("hibernate.hbm2ddl.auto", "update");
         return properties;

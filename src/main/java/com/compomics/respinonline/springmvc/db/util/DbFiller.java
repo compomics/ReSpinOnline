@@ -34,8 +34,7 @@ public class DbFiller {
         Identification ident = new Identification(assay, spectrumID, new BigDecimal(99.2), "KENNETH");
         
         idService.saveIdentification(ident);
-        
-        Spectrum details = new Spectrum();
+         Spectrum details = new Spectrum();
       
         details.setAssay(assay);
         details.setCharge(2);
@@ -46,6 +45,7 @@ public class DbFiller {
         details.setMs2Peaks(getPeaks2DArray());
 
         spectrumService.saveSpectrum(details);
+       
 
         Spectrum findBySpectrumIdAndExperiment = spectrumService.findBySpectrumIdAndExperiment(details.getSpectrum_id(), details.getAssay());
 

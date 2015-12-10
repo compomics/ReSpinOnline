@@ -34,7 +34,7 @@ public class Identification {
     private BigDecimal confidence;
 
     @NotEmpty
-    @Column(name = "SEQUENCE", unique = true, nullable = false)
+    @Column(name = "SEQUENCE", nullable = false)
     private String sequence;
 
     public Identification() {
