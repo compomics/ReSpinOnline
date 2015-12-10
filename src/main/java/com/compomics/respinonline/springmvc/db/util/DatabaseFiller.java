@@ -26,7 +26,6 @@ public class DatabaseFiller {
             applicationProperties.load(resourceStream);
         }
         Class.forName(applicationProperties.getProperty("jdbc.driverClassName"));
-        
         createIdentification("1", "KENNETH", "19212", new BigDecimal(99.2));
         createIdentification("1", "LENNART", "19213", new BigDecimal(98.8));
         createIdentification("2", "DAVY", "19214", new BigDecimal(98.3));

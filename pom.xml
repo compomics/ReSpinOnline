@@ -152,7 +152,12 @@
             <version>${dbunit.version}</version>
             <scope>test</scope>
         </dependency>
-         
+        <dependency>
+            <groupId>com.compomics</groupId>
+            <artifactId>utilities</artifactId>
+            <version>4.1.11</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
  
     <repositories>

@@ -30,21 +30,32 @@ public class DatabaseMaker {
         }
     }
 
-    private String getSQL() {
-        return /* "     CREATE TABLE EMPLOYEE("
-                + "    id INT NOT NULL auto_increment,"
-                + "    name VARCHAR(50) NOT NULL,"
-                + "    joining_date DATE NOT NULL,"
-                + "    salary DOUBLE NOT NULL,"
-                + "    ssn VARCHAR(30) NOT NULL UNIQUE,"
-                + "    PRIMARY KEY (id)"
-                + ");"
-                +*/ "CREATE TABLE IDENTIFICATION("
+    private String getIdentificationTable() {
+        return "    CREATE TABLE IDENTIFICATION("
                 + "    id INT NOT NULL auto_increment,"
                 + "    spectrum_id VARCHAR(50) NOT NULL,"
                 + "    assay VARCHAR(50) NOT NULL,"
                 + "    sequence VARCHAR(100) NOT NULL,"
                 + "    confidence DOUBLE NOT NULL,"
+                + "    PRIMARY KEY (id)"
+                + ");";
+    }
+
+    private String getSpectrumMetaDataTable() {
+        return "    CREATE TABLE SPECTRUM_METADATA("
+                + "    id INT NOT NULL auto_increment,"
+                + "    spectrum_id VARCHAR(50) NOT NULL,"
+                + "    assay VARCHAR(50) NOT NULL,"
+                + "    file VARCHAR(100) NOT NULL,"
+                + "    precursor_mz DOUBLE NOT NULL,"
+                + "    PRIMARY KEY (id)"
+                + ");";
+    }
+
+    private String getSpectrumTable() {
+        return "    CREATE TABLE SPECTRUM("
+                + "    id INT NOT NULL,"
+                + "    SPECTRUM LONGTEXT NOT NULL,"
                 + "    PRIMARY KEY (id)"
                 + ");";
     }
@@ -60,11 +71,12 @@ public class DatabaseMaker {
                 String sql = "CREATE DATABASE IF NOT EXISTS " + applicationProperties.getProperty("jdbc.databaseName") + ";";
                 st.executeUpdate("DROP DATABASE " + applicationProperties.getProperty("jdbc.databaseName"));
                 LOGGER.info("Deleted database succesfully!");
-                st.executeUpdate(sql);
                 LOGGER.info("Creating database...");
                 //Select the created / requested database
                 st.executeQuery("USE " + applicationProperties.getProperty("jdbc.databaseName") + ";");
-                st.executeUpdate(getSQL());
+                st.executeUpdate(getIdentificationTable());
+                st.executeUpdate(getSpectrumMetaDataTable());
+                st.executeUpdate(getSpectrumTable());
                 LOGGER.info("Created database succesfully!");
             }
         } catch (SQLException sqlException) {

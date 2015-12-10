@@ -13,6 +13,7 @@ import com.compomics.respinonline.springmvc.model.Identification;
 @Repository("identificationDao")
 public class IdentificationDaoImpl extends AbstractDao<Integer, Identification> implements IdentificationDao {
 
+    @Override
     public Identification findById(int id) {
         return getByKey(id);
     }
