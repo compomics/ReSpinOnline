@@ -4,8 +4,10 @@ import com.compomics.respinonline.springmvc.model.Spectrum;
 
 public interface SpectrumDao {
 
-    Spectrum findById(int id);
+    Spectrum findById(long id);
 
-    void saveIdentification(Spectrum spectrum);
+    void saveSpectrum(Spectrum spectrum);
+
+    public Spectrum findSpectrumByAssayAndSpectrumID(String spectrum_id, String experiment);
 
 }

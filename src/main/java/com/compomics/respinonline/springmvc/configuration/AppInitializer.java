@@ -1,11 +1,8 @@
 package com.compomics.respinonline.springmvc.configuration;
 
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 public class AppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
-
-   
 
     @Override
     protected Class<?>[] getRootConfigClasses() {

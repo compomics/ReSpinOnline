@@ -1,107 +1,136 @@
 package com.compomics.respinonline.springmvc.model;
 
+/**
+ *
+ * @author Kenneth
+ */
 import com.compomics.util.io.json.JsonMarshaller;
+import com.google.gson.reflect.TypeToken;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
+import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "SPECTRUM")
 public class Spectrum {
 
-    //hibernate
     @Id
-    @Column(name = "ID", nullable = false)
-    private int id;
+    @GeneratedValue
+    @Column(name = "id")
+    private Long id;
 
-    @Size(min = 3, max = 50)
-    @Column(name = "SPECTRUM", nullable = false)
-    private String spectrum;
+    @Column(name = "ms2Peaks")
+    @Type(type = "text")
+    private String ms2Peaks;
 
-    public int getId() {
+    @Column(name = "assay")
+    private String assay;
+
+    @Column(name = "spectrum_id")
+    private String spectrum_id;
+
+    @Column(name = "file")
+    private String file;
+
+    @Column(name = "charge")
+    private int charge;
+
+    @Column(name = "precursor_mz")
+    private double precursor_mz;
+
+    @Column(name = "precursor_intensity")
+    private double precursor_intensity;
+    
+    public Spectrum() {
+
+    }
+
+    public Spectrum(String peaks) {
+        this.ms2Peaks = peaks;
+    }
+
+    public Spectrum(double[][] peaks) {
+        setPeaks2DArray(peaks);
+    }
+
+    // Getter and Setter methods
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getSpectrum() {
-        return spectrum;
+    public double[][] getPeaks2DArray() {
+        return (double[][]) new JsonMarshaller().fromJson(new TypeToken<double[][]>() {
+        }.getType(), ms2Peaks);
     }
 
-    public void setSpectrum(String spectrum) {
-        this.spectrum = spectrum;
+    private void setPeaks2DArray(double[][] ms2Peaks) {
+        this.ms2Peaks = new JsonMarshaller().toJson(ms2Peaks);
     }
 
-    //POJO
-    private SpectrumMetadata metadata;
-    private double[][] peaks;
-
-    public SpectrumMetadata getMetadata() {
-        return metadata;
+    public void setMs2Peaks(String ms2Peaks) {
+        this.ms2Peaks = ms2Peaks;
     }
 
-    public void setMetadata(SpectrumMetadata metadata) {
-        this.metadata = metadata;
+    public String getMs2Peaks() {
+        return this.ms2Peaks;
     }
 
-    public double[][] getPeaks() {
-        return peaks;
+    public String getAssay() {
+        return assay;
     }
 
-    public void setPeaks(double[][] peaks) {
-        this.peaks = peaks;
+    public void setAssay(String assay) {
+        this.assay = assay;
     }
 
-    public Spectrum(SpectrumMetadata metadata, double[][] peaks) {
-        this.metadata = metadata;
-        this.peaks = peaks;
-        this.spectrum = this.toJson();
+    public String getSpectrum_id() {
+        return spectrum_id;
     }
 
-    public Spectrum(int id, SpectrumMetadata metadata, double[][] peaks) {
-        this.id = id;
-        this.metadata = metadata;
-        this.peaks = peaks;
-        this.spectrum = this.toJson();
+    public void setSpectrum_id(String spectrum_id) {
+        this.spectrum_id = spectrum_id;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 17 * hash + this.id;
-        return hash;
+    public String getFile() {
+        return file;
     }
 
-    private String toJson() {
-        JsonMarshaller marshaller = new JsonMarshaller();
-        return marshaller.toJson(this);
+    public void setFile(String file) {
+        this.file = file;
     }
 
-    @Override
-    public String toString(){
-        return toJson();
-    }
-        
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Spectrum other = (Spectrum) obj;
-        if (this.id != other.id) {
-            return false;
-        }
-        return true;
+    public int getCharge() {
+        return charge;
     }
 
+    public void setCharge(int charge) {
+        this.charge = charge;
+    }
+
+    public double getPrecursor_mz() {
+        return precursor_mz;
+    }
+
+    public void setPrecursor_mz(double precursor_mz) {
+        this.precursor_mz = precursor_mz;
+    }
+
+    public double getPrecursor_intensity() {
+        return precursor_intensity;
+    }
+
+    public void setPrecursor_intensity(double precursor_intensity) {
+        this.precursor_intensity = precursor_intensity;
+    }
+
+    
+    
 }

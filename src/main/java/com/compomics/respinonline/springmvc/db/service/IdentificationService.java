@@ -8,9 +8,9 @@ public interface IdentificationService {
 
     Identification findById(int id);
 
-    void saveIdentification(Identification employee);
+    void saveIdentification(Identification ident);
 
-    void updateIdentification(Identification employee);
+    void updateIdentification(Identification ident);
 
     List<Identification> findAllIdentifications();
 

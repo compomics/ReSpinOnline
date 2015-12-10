@@ -4,50 +4,39 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+        <link REL="stylesheet" TYPE="text/css" HREF="${pageContext.request.contextPath}/resources/css/scrollable_table.css">
         <title>Available Identifications</title>
-
-        <style>
-            tr:first-child{
-                font-weight: bold;
-                background-color: #C6C9C4;
-            }
-        </style>
-
     </head>
     <body>
         <h2>List of Identifications</h2>  
-        <table>
-            <tr>
-                <td>ID</td><td>ASSAY</td><td>SPECTRUM</td><td>SEQUENCE</td><td>CONFIDENCE</td><td></td>
-            </tr>
-            <c:forEach items="${identifications}" var="ident">
-                <tr>
-                    <td>${ident.id}</td>
-                    <td>${ident.assay}</td>
-                    <td>${ident.spectrumID}</td>
-                    <td>${ident.sequence}</td>
-                    <td>${ident.confidence}</td>
-                    <td> <a href="${pageContext.request.contextPath}/respin/view/${ident.id}" target="_blank">view</a></td>
-                </tr>
-            </c:forEach>
-        </table>
+        <div id="tableContainer" class="tableContainer">
+            <table border="0" cellpadding="0" cellspacing="0" width="100%" class="scrollTable">
+                <thead class="fixedHeader">
+                    <tr>
+                        <th>ID</th>
+                        <th>SEQUENCE</th>
+                        <th>ASSAY</th>
+                        <th>SPECTRUM</th>
+                        <th>CONFIDENCE</th>
+                        <th> </th>
+                    </tr>
+                </thead>
+                <tbody class="scrollContent">
+                    <c:forEach items="${identifications}" var="ident">
+                        <tr>
+                            <td>${ident.id}</td>
+                            <td>${ident.assay}</td>
+                            <td>${ident.spectrumID}</td>
+                            <td>${ident.sequence}</td>
+                            <td>${ident.confidence}</td>
+                            <td> <a href="${pageContext.request.contextPath}/respin/view/${ident.id}" target="_blank">view</a></td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+        </div>
         <br/>
 
-      <h2>List of Identifications for sequence KENNETH and in experiment 1</h2>  
-        <table>
-            <tr>
-                <td>ID</td><td>ASSAY</td><td>SPECTRUM</td><td>SEQUENCE</td><td>CONFIDENCE</td><td></td>
-            </tr>
-            <c:forEach items="${identificationsfilteredpep}" var="ident">
-                <tr>
-                    <td>${ident.id}</td>
-                    <td>${ident.assay}</td>
-                    <td>${ident.spectrumID}</td>
-                    <td>${ident.sequence}</td>
-                    <td>${ident.confidence}</td>
-                    <td> <a href="${pageContext.request.contextPath}/respin/view/${ident.id}" target="_blank">view</a></td>
-                </tr>
-            </c:forEach>
-        </table>
+
     </body>
 </html>

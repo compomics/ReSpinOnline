@@ -1,6 +1,7 @@
 package com.compomics.respinonline.springmvc.controller;
 
 import com.compomics.respinonline.springmvc.db.service.IdentificationService;
+import com.compomics.respinonline.springmvc.db.service.SpectrumService;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.compomics.respinonline.springmvc.model.Identification;
+import com.compomics.respinonline.springmvc.model.Spectrum;
 
 @Controller
 @RequestMapping("/")
@@ -19,6 +21,9 @@ public class AppController {
 
     @Autowired
     IdentificationService idService;
+
+    @Autowired
+    SpectrumService spService;
 
     @Autowired
     MessageSource messageSource;
@@ -31,7 +36,7 @@ public class AppController {
     public String listIdentifications(ModelMap model) {
         List<Identification> identifications = idService.findAllIdentifications();
         model.addAttribute("identifications", identifications);
-        List<Identification> identificationsfilteredPepAndAssay = idService.findAllIdentificationsByExperimentAndPeptide("1","KENNETH");
+        List<Identification> identificationsfilteredPepAndAssay = idService.findAllIdentificationsByExperimentAndPeptide("1", "KENNETH");
         model.addAttribute("identificationsfilteredpep", identificationsfilteredPepAndAssay);
         return "allidents";
     }
@@ -44,8 +49,10 @@ public class AppController {
     @RequestMapping(value = {"respin/view/{id}"}, method = RequestMethod.GET)
     public String viewIdentification(ModelMap model, @PathVariable int id) {
         Identification selectedIdentification = idService.findById(id);
+        Spectrum selectedSpectrum = spService.findBySpectrumIdAndExperiment(selectedIdentification.getSpectrumID(), selectedIdentification.getAssay());
         model.addAttribute("identification", selectedIdentification);
-        return "success";
+        model.addAttribute("spectrum", selectedSpectrum);
+        return "spectrumviewer";
     }
 
 }

@@ -2,6 +2,8 @@ package com.compomics.respinonline.springmvc.db.service;
 
 import com.compomics.respinonline.springmvc.model.Spectrum;
 
+
+
 public interface SpectrumService {
 
     Spectrum findById(int id);
@@ -11,4 +13,5 @@ public interface SpectrumService {
     void updateSpectrum(Spectrum spectrum);
 
     void saveSpectrum(Spectrum spectrum);
+
 }
