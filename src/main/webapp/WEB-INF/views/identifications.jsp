@@ -11,13 +11,14 @@
     <body>
         <div style='width:100%;text-align:center;background: #BDB76B;border:1px solid black;'><h1>ReSpin Identifications</h1></div>
         <div id="sidebar">
-            <div id="navBar">
+            <div id="query_panel">
                 <form action="${pageContext.request.contextPath}/query" method="GET" onsubmit="return validate()">  
                     <label><h3>Query</h3></label>
                     <label>( ${fn:length(identifications)} records found )</label>
                     <ul>
                         <li>Sequence<input id='sequence' type="text" name="sequence" value="${sequence}"></li>
                     </ul>
+                    <label> <a href="#" onclick="toggle_visibility();"><p id="message">Show filters</p></a></label>   
                     <div id='filters'>
                         <label> <h3>Filters</h3></label>
                         <ul>    
@@ -26,12 +27,10 @@
                             <input id = "expanded" name ="expanded" type="hidden" value="${expanded}"/><br>
                         </ul>
                     </div>
-                    <label> <a href="#" onclick="toggle_visibility();"><p id="message">Show filters</p></a></label>                
                     <input type="submit" value="Search" style="display: block; margin: 0 auto;"/><br>
                 </form>
             </div>
-
-            <div id="tableDiv">
+            <div id="result_panel">
                 <table >
                     <thead>
                         <tr>
@@ -47,7 +46,7 @@
                         <c:forEach items="${identifications}" var="ident">
                             <tr>
                                 <td>${ident.id}</td>
-                                <td>${ident.assay}</td>
+                                <td> <a href="${pageContext.request.contextPath}/respin/experiment/${ident.assay}" target="_blank">${ident.assay}</a></td>
                                 <td>${ident.spectrumID}</td>
                                 <td>${ident.sequence}</td>
                                 <td>${ident.confidence}</td>
@@ -65,7 +64,7 @@
                 document.getElementById('filters').style.display = "block";
             </script>
         </c:if>
-
+        <div style='width:100%;text-align:center;background: #BDB76B;border:1px solid black;'><h5>By Kenneth Verheggen</h5></div>
     </body>
 
     <script type="text/javascript">

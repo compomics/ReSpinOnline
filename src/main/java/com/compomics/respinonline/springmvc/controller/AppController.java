@@ -72,11 +72,6 @@ public class AppController {
         return "identifications";
     }
 
-
-    /*
-     * This method will be called on form submission, handling POST request for
-     * updating identification in database. It also validates the user input
-     */
     @RequestMapping(value = {"respin/view/{id}"}, method = RequestMethod.GET)
     public String viewIdentification(ModelMap model,
             @PathVariable int id
@@ -86,6 +81,13 @@ public class AppController {
         model.addAttribute("identification", selectedIdentification);
         model.addAttribute("spectrum", selectedSpectrum);
         return "spectrumviewer";
+    }
+
+    @RequestMapping(value = {"respin/experiment/{id}"}, method = RequestMethod.GET)
+    public String viewExperiment(ModelMap model,
+            @PathVariable int id) {
+        model.addAttribute("experiment", id);
+        return "assay";
     }
 
 }

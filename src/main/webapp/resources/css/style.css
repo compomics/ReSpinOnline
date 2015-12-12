@@ -3,26 +3,25 @@
     border: 1px solid black;
     overflow: hidden; /* will contain if #first is longer than #second */
 }
-#navBar {
-    width: 15%;
-    height:95%;
-    float:left; /* add this */
+#query_panel {
+    float: left;
+    height: 100%;
+    width: 210px;
     border: 1px solid black;
 }
-#navBar ul{
+#query_panel ul{
     list-style-type: none;
     margin: 5px;
     padding: 5px;
 }
-#navBar label{
+#query_panel label{
     text-align:center;
 }
 
-
-#tableDiv {
-    width: 80%;
-    height:95%;
-    float:left; /* add this */
+#result_panel {
+    height:100%;
+    margin-left: 210px;
+    position: relative;
     overflow: hidden; /* if you don't want #second to wrap below #first */
     overflow-x:auto;
     overflow-y:auto;
