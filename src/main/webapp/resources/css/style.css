@@ -1,1 +1,101 @@
-label { display: block; width: 6em; float: left; }
+#wrapper {
+    width: 100%;
+    border: 1px solid black;
+    overflow: hidden; /* will contain if #first is longer than #second */
+}
+#navBar {
+    width: 15%;
+    height:95%;
+    float:left; /* add this */
+    border: 1px solid black;
+}
+#navBar ul{
+    list-style-type: none;
+    margin: 5px;
+    padding: 5px;
+}
+#navBar label{
+    text-align:center;
+}
+
+
+#tableDiv {
+    width: 80%;
+    height:95%;
+    float:left; /* add this */
+    overflow: hidden; /* if you don't want #second to wrap below #first */
+    overflow-x:auto;
+    overflow-y:auto;
+    border:1px solid black;
+}
+
+table { 
+    width: 100%;
+    color: #333;
+    font-family: Helvetica, Arial, sans-serif;
+    float:left;
+}
+
+td, th { 
+    border: 1px solid transparent; /* No more visible border */
+    height: 30px; 
+    transition: all 0.3s;  /* Simple transition for hover effect */
+}
+
+th {
+    background: #DFDFDF;  /* Darken header a bit */
+    font-weight: bold;
+}
+
+td {
+    background: #FAFAFA;
+    text-align: center;
+}
+
+/* Cells in even rows (2,4,6...) are one color */ 
+tr:nth-child(even) td { background: #F1F1F1; }   
+
+/* Cells in odd rows (1,3,5...) are another (excludes header cells)  */ 
+tr:nth-child(odd) td { background: #FEFEFE; }  
+
+
+/* basic elements */
+html {
+    margin: 0;
+    padding: 0;
+}
+body { 
+    font: 75% georgia, sans-serif;
+    line-height: 1.88889;
+    color: #555753; 
+    margin: 0; 
+    padding: 0;
+}
+p { 
+    margin-top: 0; 
+    text-align: justify;
+}
+h3 { 
+    font: italic normal 1.4em georgia, sans-serif;
+    letter-spacing: 1px; 
+    margin-bottom: 0; 
+    color: #7D775C;
+}
+a:link { 
+    font-weight: bold; 
+    text-decoration: none; 
+    color: #B7A5DF;
+}
+a:visited { 
+    font-weight: bold; 
+    text-decoration: none; 
+    color: #D4CDDC;
+}
+a:hover, a:focus, a:active { 
+    text-decoration: underline; 
+    color: #9685BA;
+}
+abbr {
+    border-bottom: none;
+}
+

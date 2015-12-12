@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.compomics.respinonline.springmvc.model.Identification;
 import com.compomics.respinonline.springmvc.model.Spectrum;
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -35,6 +37,7 @@ public class AppController {
      */
     @RequestMapping(value = {"/",}, method = RequestMethod.GET)
     public String listIdentifications(ModelMap model) {
+        model.addAttribute("expanded", 0);
         return "identifications";
     }
 
@@ -42,17 +45,29 @@ public class AppController {
      * This method will list all identifications
      */
     @RequestMapping(value = {"/query",}, method = RequestMethod.GET)
-    public String filterIdentifications(ModelMap model, 
-            @RequestParam(value = "query_value", required = false) String queryValue, 
-            @RequestParam(value = "query_type", required = false) String queryType) {
-        List<Identification> identifications = new ArrayList<>();
-        if (queryType.equalsIgnoreCase("sequence")) {
-            identifications = idService.findAllIdentificationsByPeptide(queryValue);
-        } else if (queryType.equalsIgnoreCase("experiment")) {
-            identifications = idService.findAllIdentificationsByExperiment(queryValue);
+    public String filterIdentifications(ModelMap model,
+            @RequestParam(value = "sequence", required = false) String sequence,
+            @RequestParam(value = "confidence", required = false) Double confidence,
+            @RequestParam(value = "experiment", required = false) String experiment,
+            @RequestParam(value = "expanded", required = true) Integer expanded) {
+        System.out.println("Just verifying that I recieved " + expanded);
+        model.addAttribute("expanded", expanded);
+        HashMap<String, Object> requestedCriteria = new HashMap<>();
+        if (sequence != null && !sequence.isEmpty()) {
+            requestedCriteria.put("sequence", sequence);
         }
-        model.addAttribute("query_value", queryValue);
-        model.addAttribute("query_type", queryType);
+        if (confidence != null) {
+            requestedCriteria.put("confidence", new BigDecimal(confidence));
+            model.addAttribute("confidence", confidence);
+        }
+        if (experiment != null && !experiment.isEmpty()) {
+            requestedCriteria.put("assay", experiment);
+            model.addAttribute("experiment", experiment);
+        }
+        List<Identification> identifications = new ArrayList<>();
+        if (!requestedCriteria.isEmpty()) {
+            identifications.addAll(idService.findAllFilteredIdentifications(requestedCriteria));
+        }
         model.addAttribute("identifications", identifications);
         return "identifications";
     }
@@ -60,7 +75,7 @@ public class AppController {
 
     /*
      * This method will be called on form submission, handling POST request for
-     * updating employee in database. It also validates the user input
+     * updating identification in database. It also validates the user input
      */
     @RequestMapping(value = {"respin/view/{id}"}, method = RequestMethod.GET)
     public String viewIdentification(ModelMap model,

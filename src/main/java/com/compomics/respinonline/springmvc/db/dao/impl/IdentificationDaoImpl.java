@@ -9,6 +9,8 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import com.compomics.respinonline.springmvc.model.Identification;
+import java.util.HashMap;
+import java.util.Map.Entry;
 
 @Repository("identificationDao")
 public class IdentificationDaoImpl extends AbstractDao<Integer, Identification> implements IdentificationDao {
@@ -42,6 +44,19 @@ public class IdentificationDaoImpl extends AbstractDao<Integer, Identification> 
         Criteria criteria = createEntityCriteria();
         criteria.add(Restrictions.eq("sequence", sequence));
         criteria.add(Restrictions.eq("assay", experiment));
+        return (List<Identification>) criteria.list();
+    }
+
+    @Override
+    public List<Identification> findAllFilteredIdentifications(HashMap<String, Object> requestedCriteria) {
+        Criteria criteria = createEntityCriteria();
+        for (Entry<String, Object> aCriterion : requestedCriteria.entrySet()) {
+            if (aCriterion.getKey().equalsIgnoreCase("confidence")) {
+                criteria.add(Restrictions.ge(aCriterion.getKey(), aCriterion.getValue()));
+            } else {
+                criteria.add(Restrictions.eq(aCriterion.getKey(), aCriterion.getValue()));
+            }
+        }
         return (List<Identification>) criteria.list();
     }
 

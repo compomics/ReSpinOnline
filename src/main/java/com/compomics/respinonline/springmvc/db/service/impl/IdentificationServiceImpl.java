@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.compomics.respinonline.springmvc.db.dao.IdentificationDao;
 import com.compomics.respinonline.springmvc.db.service.IdentificationService;
 import com.compomics.respinonline.springmvc.model.Identification;
+import java.util.HashMap;
+import org.hibernate.Criteria;
 
 @Service("identificationService")
 @Transactional
@@ -33,6 +35,7 @@ public class IdentificationServiceImpl implements IdentificationService {
         }
     }
 
+    
     @Override
     public List<Identification> findAllIdentifications() {
         return dao.findAllIdentifications();
@@ -58,4 +61,8 @@ public class IdentificationServiceImpl implements IdentificationService {
         return dao.findAllIdentificationsByAssayAndPeptide(experiment, sequence);
     }
 
+    @Override   
+      public List<Identification> findAllFilteredIdentifications(HashMap<String, Object> requestedCriteria){
+          return dao.findAllFilteredIdentifications(requestedCriteria);
+      }
 }
