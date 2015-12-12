@@ -8,8 +8,8 @@
         <link REL="stylesheet" TYPE="text/css" HREF="${pageContext.request.contextPath}/resources/css/style.css">
         <title>Available Identifications</title>
     </head>
-    <body>
-        <div style='width:100%;text-align:center;background: #BDB76B;border:1px solid black;'><h1>ReSpin Identifications</h1></div>
+    <body onload="toggle_visibility">
+        <div style='width:100%;text-align:center;border:1px solid black;'><h1>ReSpin Identifications</h1></div>
         <div id="sidebar">
             <div id="query_panel">
                 <form action="${pageContext.request.contextPath}/query" method="GET" onsubmit="return validate()">  
@@ -30,6 +30,11 @@
                     <input type="submit" value="Search" style="display: block; margin: 0 auto;"/><br>
                 </form>
             </div>
+            <c:if test="${expanded==0}">
+                <script>
+                    set_invisible();
+                </script>
+            </c:if>
             <div id="result_panel">
                 <table >
                     <thead>
@@ -58,16 +63,17 @@
             </div>
             <br/>
         </div>
-        <c:if test="${expanded==1}">
-            <script>
-                document.getElementById('message').innerHTML = "Hide filters";
-                document.getElementById('filters').style.display = "block";
-            </script>
-        </c:if>
-        <div style='width:100%;text-align:center;background: #BDB76B;border:1px solid black;'><h5>By Kenneth Verheggen</h5></div>
+        <div style='width:100%;text-align:center;border:1px solid black;'><h5>By Kenneth Verheggen</h5></div>
     </body>
 
     <script type="text/javascript">
+
+
+        function set_invisibile() {
+            msg.innerHTML = "Show filters";
+            document.getElementById('expanded').value = 0;
+            e.style.display = "none";
+        }
 
         function toggle_visibility() {
             var e = document.getElementById('filters');
@@ -87,27 +93,38 @@
             var n = ~~Number(str);
             return String(n) === str && n === 0;
         }
-        function validate() {
 
+        function is_decimal(input) {
+            if (input) {
+                return (/[\d]+(\.[\d]+)?/).exec(input);
+            }
+            return false;
+        }
 
+        function is_string(str) {
             var re = /^[A-Za-z]+$/;
-            var re2 = /[^0-9]/;
+            return re.test(str);
+        }
+
+        function validate() {
             var validated = true;
             var error = "Errors\n-------\n";
 
             //validate the sequence
             var sequence = document.getElementById('sequence').value;
-            if ((sequence) && !re.test(sequence)) {
+            if ((sequence) && is_string(sequence)) {
                 error = error.concat(" - Sequence can not contain numbers or characters other than single letter amino acids:" + sequence + "\n");
                 validated = false;
             }
 
             //validate the confidence input
             var conf = document.getElementById('confidence').value;
-            if (((conf) && re2.test(conf)) || ((conf) && (Number(conf) < 0) || (Number(conf) > 100))) {
-                validated = false;
-                error = error.concat("- Confidence Threshold has to be numeric between 0 and 100 :" + conf + "\n");
-            }
+            if (is_decimal(conf)) {
+                  if (!(conf > 0 & conf <= 100)) {
+                    validated = false;
+                    error = error.concat("- Confidence Threshold has to be numeric and between 0 and 100 :" + conf + "\n");
+                }
+            } 
             //@ToDo validate other input
             if (!validated) {
                 alert(error);

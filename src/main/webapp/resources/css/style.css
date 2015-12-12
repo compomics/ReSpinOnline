@@ -33,12 +33,14 @@ table {
     color: #333;
     font-family: Helvetica, Arial, sans-serif;
     float:left;
+    text-align: left;
+    background-color:#DFDFDF; 
 }
 
 td, th { 
     border: 1px solid transparent; /* No more visible border */
     height: 30px; 
-    transition: all 0.3s;  /* Simple transition for hover effect */
+    transition: all 0.5s;  /* Simple transition for hover effect */
 }
 
 th {

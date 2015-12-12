@@ -17,17 +17,13 @@
         <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/ion.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/internal.js"></script>    
 
-        <link REL="stylesheet" TYPE="text/css" HREF="${pageContext.request.contextPath}/resources/css/lorikeet.css">
+       <link REL="stylesheet" TYPE="text/css" HREF="${pageContext.request.contextPath}/resources/css/lorikeet.css"> 
 
     </head>
 
     <body>
-
-        <h1>Viewing spectrum for ${identification.sequence}</h1>
-
         <!-- PLACE HOLDER DIV FOR THE SPECTRUM -->
         <div id="lorikeet"></div>
-
         <script type="text/javascript">
 
             $(document).ready(function () {
@@ -50,7 +46,7 @@
 
             });
             //the name of the mgf file
-            var fileName = "${spectrum.file}";
+            var fileName = "${identification.assay}";
             //sequence
             var sequence = "${identification.sequence}";
             var varMods = [];

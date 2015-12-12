@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-                <title>Experiment metadata for ${experiment}</title>
+        <title>Experiment metadata for ${experiment}</title>
         <link REL="stylesheet" TYPE="text/css" HREF="${pageContext.request.contextPath}/resources/css/style.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script>
@@ -48,7 +48,7 @@
     <body onload="loadMetaData('https://www.ebi.ac.uk/pride/ws/archive/assay/${experiment}')">
         <div>
             <h1>Metadata for experiment ${experiment}</h1>
-            Note that project metadata is <font color="#33cc33">green</font> while experiment metadata is <font color="#0099ff">blue</font>.
+            Note that project metadata is <font color="#33cc33">green</font> while experiment metadata is <font color="#0099ff">blue</font>.<br>
             <table id='experiment_metadata'>
                 <tr>
                     <th>Parameter</th>
