@@ -1697,7 +1697,7 @@
             specinfo += options.fileName + '</td></tr>';
             specinfo += '<tr><td>Spectrum ID</td><td>' + options.scanNum + '</td></tr>';
             specinfo += '<tr><td>Mass</td><td>' + mass.toFixed(4) + '</td></tr>';
-            specinfo += '<tr><td>Charge</td><td>' + options.charge + '</td></tr>';
+            specinfo += '<tr><td>Charge</td><td>' + options.charge+'</td></tr>';
             specinfo += '<tr><td>Mass to Charge</td><td>' + mz.toFixed(4) + '</td></tr>';
         }
         specinfo += '</table>';
